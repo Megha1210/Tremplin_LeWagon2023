@@ -1,0 +1,63 @@
+Question 1: Can you get all data about movies?
+select * from movies;
+
+Question 2: How do you get all data about directors?
+select * from directors;
+
+Question 3: Check how many movies are in iMDB.
+select COUNT(*) from movies;
+
+Question 4: Find these 3 directors: James Cameron ; Luc Besson ; John Woo
+select * from directors
+WHERE name IN ('James Cameron' , 'Luc Besson' , 'John Woo');
+
+Question 5: Find all directors with name starting with Steven.
+select * from directors
+WHERE name LIKE 'Steven%'
+
+Question 6: Count female directors.
+select count(*) from directors
+WHERE gender = 1
+
+Question 7: Find the name of the 10th first women directors?
+select * from directors
+where gender =1
+LIMIT 10;
+
+Question 8: What are the 3 most popular movies?
+select * from movies
+ORDER by popularity DESC
+limit 3;
+
+Question 9: What are the 3 most bankable movies (with the highest revenue)?
+select * from movies
+ORDER by revenue DESC
+limit 3;
+
+Question 10: What is the most awarded average vote since the January 1st, 2000?
+select * FROM movies 
+WHERE release_date BETWEEN '2000-01-01' and '2016-08-02' 
+GROUP BY vote_count
+order by vote_count DESC
+LIMIT 1 ;
+
+
+Question 11: Which movie(s) were directed by Brenda Chapman?
+select * from movies
+join directors on movies.director_id = directors.id
+WHERE directors.name ='Brenda Chapman';
+
+Question 12: Which director made the most movies?
+select directors.name, count(title)  as number_of_movies
+from movies
+join directors on movies.director_id = directors.id
+GROUP by directors.name
+ORDER by number_of_movies Desc
+LIMIT 1;
+
+Question 13: Which director is the most bankable?
+SELECT directors.name, SUM(revenue) as total_revenue FROM movies 
+JOIN directors on movies.director_id = directors.id
+GROUP by directors.name
+ORDER by total_revenue DESC
+LIMIT 1;
